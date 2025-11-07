@@ -74,10 +74,20 @@ A URL do WhatsApp está fixa no arquivo `src/pages/EventThankYou.tsx`:
 const WHATSAPP_URL = 'https://wa.me/5511999999999'; // TODO: Atualizar com a URL real
 ```
 
+## 🔗 Integrações
+
+### Supabase
+- **Projeto ID:** `hpjqetugksblfiojwhzh`
+- **URL:** `https://hpjqetugksblfiojwhzh.supabase.co`
+- Para mais informações, consulte `supabase.config.md`
+
+### GitHub
+- **Repositório:** https://github.com/eduardobestpiece/sitemonteo.git
+
 ## 📝 Notas
 
 - Este projeto é completamente independente e pode ser movido para qualquer local
-- Não possui dependências do Supabase ou outras integrações externas
 - Todas as configurações são fixas no código
 - O projeto usa React, TypeScript, Vite e Tailwind CSS
+- Configurações do Supabase estão documentadas em `supabase.config.md`
 
