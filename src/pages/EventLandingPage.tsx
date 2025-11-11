@@ -1,11 +1,27 @@
 import { Calendar, ChevronDown, Video } from "lucide-react";
 import { useEffect, useState } from "react";
+import { usePixels } from "../hooks/usePixels";
+import { useFormIframe } from "../hooks/useFormIframe";
+import { useEventSettings } from "../hooks/useEventSettings";
 
-// Data fixa do evento: 19 de Novembro de 2025 às 19 horas
-const EVENT_DATE = new Date(2025, 10, 19, 19, 0, 0); // Mês 10 = Novembro (0-indexed)
-const EVENT_DATE_FORMATTED = "19 de Novembro de 2025";
+// Data padrão (fallback)
+const DEFAULT_EVENT_DATE = new Date(2025, 10, 19, 19, 0, 0); // Mês 10 = Novembro (0-indexed)
+const DEFAULT_EVENT_DATE_FORMATTED = "19 de Novembro de 2025 às 19:00 horas";
 
 export default function EventLandingPage() {
+  // Hook para disparar pixels
+  usePixels();
+  
+  // Hook para carregar URL do formulário
+  const { formUrl } = useFormIframe();
+  
+  // Hook para carregar data do evento
+  const { eventDate, eventDateFormatted, loading: loadingEventDate } = useEventSettings();
+
+  // Usar data do banco ou data padrão
+  const EVENT_DATE = eventDate || DEFAULT_EVENT_DATE;
+  const EVENT_DATE_FORMATTED = eventDateFormatted || DEFAULT_EVENT_DATE_FORMATTED;
+
   // Estado para o countdown
   const [timeLeft, setTimeLeft] = useState({
     days: 0,
@@ -16,6 +32,8 @@ export default function EventLandingPage() {
 
   // Calcular countdown
   useEffect(() => {
+    if (!EVENT_DATE) return;
+    
     const updateCountdown = () => {
       const now = new Date();
       const difference = EVENT_DATE.getTime() - now.getTime();
@@ -35,8 +53,8 @@ export default function EventLandingPage() {
     updateCountdown();
     const interval = setInterval(updateCountdown, 1000);
 
-    return () => clearInterval(interval);
-  }, []);
+      return () => clearInterval(interval);
+    }, [EVENT_DATE]);
 
   useEffect(() => {
     // ===== SISTEMA ROBUSTO DE CAPTURA DE UTMs DA PÁGINA PAI =====
@@ -168,7 +186,7 @@ export default function EventLandingPage() {
     // ========== RESIZE (melhorado) - funciona em desktop e mobile ==========
     const IFRAME_IDS = ['form-iframe', 'form-iframe-mobile'];
     const lastHeights: Map<string, number> = new Map();
-    const fallbackTimeouts: Map<string, number[]> = new Map();
+    const fallbackTimeouts: Map<string, ReturnType<typeof setTimeout>[]> = new Map();
     let messageListenerAdded = false;
 
     function isDesktop(): boolean {
@@ -264,7 +282,7 @@ export default function EventLandingPage() {
             
             // Reduzir tentativas para melhor performance
             const attempts = [500, 1500, 2500];
-            const newTimeouts: number[] = [];
+            const newTimeouts: ReturnType<typeof setTimeout>[] = [];
             attempts.forEach(delay => {
               const timeout = setTimeout(function() {
                 if (lastHeights.get(id) === 0) {
@@ -302,7 +320,7 @@ export default function EventLandingPage() {
           
           // Reduzir tentativas para melhor performance
           const attempts = [500, 1500, 2500];
-          const newTimeouts: number[] = [];
+          const newTimeouts: ReturnType<typeof setTimeout>[] = [];
           attempts.forEach(delay => {
             const timeout = setTimeout(function() {
               if (lastHeights.get(id) === 0) {
@@ -350,7 +368,7 @@ export default function EventLandingPage() {
     }, 500);
 
     // Debounce resize para melhor performance
-    let resizeTimeout: number | null = null;
+    let resizeTimeout: ReturnType<typeof setTimeout> | null = null;
     window.addEventListener('resize', function() {
       if (resizeTimeout) clearTimeout(resizeTimeout);
       resizeTimeout = setTimeout(function() {
@@ -383,7 +401,7 @@ export default function EventLandingPage() {
           <div className="flex items-center whitespace-nowrap">
             <Calendar className="h-5 w-5 text-white mx-4 flex-shrink-0" />
             <span className="text-white text-sm md:text-base font-medium">
-              O evento acontecerá no dia {EVENT_DATE_FORMATTED}
+              O evento acontecerá no dia {EVENT_DATE_FORMATTED} no Horário de Brasília
             </span>
             <Video className="h-5 w-5 text-white mx-4 flex-shrink-0" />
             <span className="text-white text-sm md:text-base font-medium">
@@ -403,7 +421,7 @@ export default function EventLandingPage() {
           <div className="flex items-center whitespace-nowrap">
             <Calendar className="h-5 w-5 text-white mx-4 flex-shrink-0" />
             <span className="text-white text-sm md:text-base font-medium">
-              O evento acontecerá no dia {EVENT_DATE_FORMATTED}
+              O evento acontecerá no dia {EVENT_DATE_FORMATTED} no Horário de Brasília
             </span>
             <Video className="h-5 w-5 text-white mx-4 flex-shrink-0" />
             <span className="text-white text-sm md:text-base font-medium">
@@ -595,7 +613,7 @@ export default function EventLandingPage() {
                 overflow: 'visible'
               }}>
                 <iframe 
-                  src="https://www.bpsales.com.br/form/c8b6c593-f941-4c9f-874a-1cb7d83e28c5?v=1762539888901&r=xlzlb7u" 
+                  src={formUrl} 
                   width="100%" 
                   scrolling="no" 
                   frameBorder="0" 
@@ -790,7 +808,7 @@ export default function EventLandingPage() {
                     overflow: 'visible'
                   }}>
                     <iframe 
-                      src="https://www.bpsales.com.br/form/c8b6c593-f941-4c9f-874a-1cb7d83e28c5?v=1762539888901&r=xlzlb7u" 
+                      src={formUrl} 
                       width="100%" 
                       scrolling="no" 
                       frameBorder="0" 

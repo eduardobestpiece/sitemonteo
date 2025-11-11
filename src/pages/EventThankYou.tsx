@@ -1,15 +1,21 @@
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { Calendar, AlertCircle, MousePointerClick } from "lucide-react";
-
-// URL do WhatsApp - será definida depois
-const WHATSAPP_URL = 'https://wa.me/5511999999999'; // TODO: Atualizar com a URL real
+import { useRedirectUrl } from "../hooks/useRedirectUrl";
+import { usePixels } from "../hooks/usePixels";
 
 export default function EventThankYou() {
+  // Hook para disparar pixels
+  usePixels();
   const [searchParams] = useSearchParams();
   const [firstName, setFirstName] = useState<string>('');
   const [progress, setProgress] = useState<number>(0);
-  const [whatsappUrl, setWhatsappUrl] = useState<string>(WHATSAPP_URL);
+  
+  // Hook para carregar URL de redirecionamento do banco
+  const { redirectUrl } = useRedirectUrl();
+  
+  // URL final: prioridade para URL da query string, depois URL do banco
+  const [finalRedirectUrl, setFinalRedirectUrl] = useState<string>(redirectUrl);
 
   // Função para calcular a cor da barra de progresso (vermelho -> amarelo)
   const getProgressColor = (progressValue: number, alpha?: number) => {
@@ -58,14 +64,14 @@ export default function EventThankYou() {
       }
     }
 
-    // Buscar URL do WhatsApp (prioridade: URL params > fixo)
-    const whatsappFromUrl = searchParams.get('whatsapp') || searchParams.get('whatsapp_url');
-    if (whatsappFromUrl) {
-      setWhatsappUrl(whatsappFromUrl);
+    // Buscar URL de redirecionamento (prioridade: URL params > banco de dados)
+    const redirectFromUrl = searchParams.get('redirect') || searchParams.get('redirect_url') || searchParams.get('whatsapp') || searchParams.get('whatsapp_url');
+    if (redirectFromUrl) {
+      setFinalRedirectUrl(redirectFromUrl);
     } else {
-      setWhatsappUrl(WHATSAPP_URL);
+      setFinalRedirectUrl(redirectUrl);
     }
-  }, [searchParams]);
+  }, [searchParams, redirectUrl]);
 
   // Animar barra de progresso até 80%
   useEffect(() => {
@@ -157,7 +163,7 @@ export default function EventThankYou() {
 
           <div className="flex justify-center">
             <a
-              href={whatsappUrl}
+              href={finalRedirectUrl}
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center gap-3 px-8 py-4 rounded-lg font-semibold text-white transition-all duration-300 hover:opacity-90"
