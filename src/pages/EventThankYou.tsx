@@ -182,6 +182,9 @@ export default function EventThankYou() {
                   filter: 'brightness(0) invert(1)',
                   textShadow: '0 1px 2px rgba(0, 0, 0, 0.3)'
                 }}
+                loading="eager"
+                width="24"
+                height="24"
               />
               <span style={{ textShadow: '0 1px 2px rgba(0, 0, 0, 0.3)' }}>
                 Acessar Comunidade

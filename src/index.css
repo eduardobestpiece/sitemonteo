@@ -35,5 +35,22 @@ body {
   background-color: hsl(var(--background));
   color: hsl(var(--foreground));
   font-family: 'DM Sans', system-ui, sans-serif;
+  /* Otimizações de performance */
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Otimizações de renderização para imagens */
+img {
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
+}
+
+/* Otimização para animações */
+@media (prefers-reduced-motion: no-preference) {
+  * {
+    scroll-behavior: smooth;
+  }
 }
 

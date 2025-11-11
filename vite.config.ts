@@ -18,6 +18,23 @@ export default defineConfig({
     minify: 'esbuild',
     cssCodeSplit: true,
     sourcemap: false,
+    // Otimizações de chunk splitting para melhor cache
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          'react-vendor': ['react', 'react-dom', 'react-router-dom'],
+          'supabase': ['@supabase/supabase-js'],
+          'icons': ['lucide-react'],
+        },
+      },
+    },
+    // Aumentar limite de aviso de chunk size
+    chunkSizeWarningLimit: 1000,
+  },
+  // Otimizações de preview
+  preview: {
+    port: 8080,
+    strictPort: true,
   },
 });
 

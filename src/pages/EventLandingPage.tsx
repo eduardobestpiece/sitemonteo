@@ -412,6 +412,8 @@ export default function EventLandingPage() {
               alt="Monteo Investimentos"
               className="h-5 w-5 mx-4 flex-shrink-0"
               style={{ filter: 'brightness(0) invert(1)' }}
+              loading="lazy"
+              decoding="async"
             />
             <span className="text-white text-sm md:text-base font-medium">
               Esse é um evento promovido e patrocinado pela Monteo Investimentos
@@ -432,6 +434,8 @@ export default function EventLandingPage() {
               alt="Monteo Investimentos"
               className="h-5 w-5 mx-4 flex-shrink-0"
               style={{ filter: 'brightness(0) invert(1)' }}
+              loading="lazy"
+              decoding="async"
             />
             <span className="text-white text-sm md:text-base font-medium">
               Esse é um evento promovido e patrocinado pela Monteo Investimentos
@@ -565,6 +569,8 @@ export default function EventLandingPage() {
                 loading="eager"
                 fetchPriority="high"
                 decoding="async"
+                width="400"
+                height="450"
               />
             </div>
 
@@ -784,6 +790,8 @@ export default function EventLandingPage() {
                   loading="eager"
                   fetchPriority="high"
                   decoding="async"
+                  width="600"
+                  height="900"
                 />
               </div>
 
@@ -1098,6 +1106,8 @@ export default function EventLandingPage() {
                   }}
                   loading="lazy"
                   decoding="async"
+                  width="600"
+                  height="400"
                 />
               </div>
 
@@ -1131,6 +1141,8 @@ export default function EventLandingPage() {
           style={{ width: '200px', height: 'auto', maxWidth: '100%' }}
           loading="lazy"
           decoding="async"
+          width="200"
+          height="60"
         />
       </section>
     </div>
