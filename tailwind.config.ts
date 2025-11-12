@@ -6,6 +6,8 @@ export default {
 		"./index.html",
 		"./src/**/*.{ts,tsx}",
 	],
+	// Otimizações de purging mais agressivas
+	safelist: [], // Lista vazia força purging completo
 	prefix: "",
 	theme: {
 		container: {

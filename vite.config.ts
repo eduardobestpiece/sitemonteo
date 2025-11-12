@@ -21,10 +21,21 @@ export default defineConfig({
     // Otimizações de chunk splitting para melhor cache
     rollupOptions: {
       output: {
-        manualChunks: {
-          'react-vendor': ['react', 'react-dom', 'react-router-dom'],
-          'supabase': ['@supabase/supabase-js'],
-          'icons': ['lucide-react'],
+        manualChunks: (id) => {
+          // Separar vendor chunks mais granularmente
+          if (id.includes('node_modules')) {
+            if (id.includes('react') || id.includes('react-dom') || id.includes('react-router')) {
+              return 'react-vendor';
+            }
+            if (id.includes('@supabase')) {
+              return 'supabase';
+            }
+            if (id.includes('lucide-react')) {
+              return 'icons';
+            }
+            // Outros node_modules em chunk separado
+            return 'vendor';
+          }
         },
         // Otimização de nomes de chunks para melhor cache
         chunkFileNames: 'assets/js/[name]-[hash].js',
@@ -37,6 +48,8 @@ export default defineConfig({
     // Otimizações adicionais
     target: 'es2015',
     cssMinify: true,
+    // Otimizar tamanho do bundle
+    reportCompressedSize: false, // Desabilitar para builds mais rápidos
   },
   // Otimizações de preview
   preview: {

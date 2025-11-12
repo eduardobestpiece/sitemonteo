@@ -10,14 +10,14 @@ const DEFAULT_EVENT_DATE = new Date(2025, 10, 19, 19, 0, 0); // Mês 10 = Novemb
 const DEFAULT_EVENT_DATE_FORMATTED = "19 de Novembro de 2025 às 19:00 horas";
 
 export default function EventLandingPage() {
-  // Hook para disparar pixels
-  usePixels();
-  
   // Hook para carregar URL do formulário
   const { formUrl } = useFormIframe();
   
   // Hook para carregar data do evento
   const { eventDate, eventDateFormatted, loading: loadingEventDate } = useEventSettings();
+  
+  // Hook para disparar pixels (otimizado para não bloquear render)
+  usePixels();
 
   // Usar data do banco ou data padrão
   const EVENT_DATE = eventDate || DEFAULT_EVENT_DATE;
