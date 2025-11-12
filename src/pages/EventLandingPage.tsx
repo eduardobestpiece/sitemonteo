@@ -1117,10 +1117,10 @@ export default function EventLandingPage() {
                 </h2>
                 <div className="space-y-4 text-white text-base lg:text-lg leading-relaxed">
                   <p>
-                    Dono de SAAS BP Sales e CMO e CEOO em uma empresa de investimentos, Eduardo construiu uma carreira que gerou mais de meio bilhão de reais nos últimos 6 anos para os seus clientes.
+                    Consultora e franqueada da Monteo investimentos , Thaty construiu uma carreira que tem mais 64 milhões sob a sua gestão, uma das maiores consultoras atualmente.
                   </p>
                   <p>
-                    Um jovem que sempre esteve nos bastidores unificando poderosas ferramentas de automação, marketing e vendas para produzir resultados cada vez maiores.
+                    Formada em contabilidade e economia, pós graduada em consultoria econômica e tem mais de 16 anos de experiência com gestão financeira . Propósito de vida mudar a vida das pessoas através do conhecimento e dos investimentos
                   </p>
                 </div>
               </div>
