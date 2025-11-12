@@ -65,7 +65,7 @@ export function usePixels() {
       const metaPixels = pixels.filter(p => p.type === 'meta_ads' && p.pixel_id);
       
       if (metaPixels.length > 0) {
-        // Carregar script do Meta Pixel apenas uma vez
+        // Carregar script do Meta Pixel apenas uma vez (defer para não bloquear render)
         if (!window.fbq) {
           (function(f: any, b: any, e: any, v: any, n?: any, t?: any, s?: any) {
             if (f.fbq) return;
@@ -78,7 +78,8 @@ export function usePixels() {
             n.version = '2.0';
             n.queue = [];
             t = b.createElement(e);
-            t.async = !0;
+            t.async = true;
+            t.defer = true;
             t.src = v;
             t.onload = () => {
               console.log('Script do Meta Pixel carregado');
@@ -900,10 +901,11 @@ export function usePixels() {
   const fireGoogleAdsPixel = (pixel: Pixel, eventName: string = 'page_view', eventParams: Record<string, any> = {}) => {
     if (!pixel.pixel_id) return;
 
-    // Google Ads Conversion Tracking
+    // Google Ads Conversion Tracking (defer para não bloquear render)
     if (!window.gtag) {
       const script = document.createElement('script');
       script.async = true;
+      script.defer = true;
       script.src = `https://www.googletagmanager.com/gtag/js?id=${pixel.pixel_id}`;
       document.head.appendChild(script);
 
@@ -977,10 +979,11 @@ export function usePixels() {
   const fireGoogleAnalyticsPixel = (pixel: Pixel, eventName: string = 'page_view', eventParams: Record<string, any> = {}) => {
     if (!pixel.pixel_id) return;
 
-    // Google Analytics 4
+    // Google Analytics 4 (defer para não bloquear render)
     if (!window.gtag) {
       const script = document.createElement('script');
       script.async = true;
+      script.defer = true;
       script.src = `https://www.googletagmanager.com/gtag/js?id=${pixel.pixel_id}`;
       document.head.appendChild(script);
 

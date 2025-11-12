@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { usePixels } from "../hooks/usePixels";
 import { useFormIframe } from "../hooks/useFormIframe";
 import { useEventSettings } from "../hooks/useEventSettings";
+import { LazyBackgroundImage } from "../components/LazyBackgroundImage";
 
 // Data padrão (fallback)
 const DEFAULT_EVENT_DATE = new Date(2025, 10, 19, 19, 0, 0); // Mês 10 = Novembro (0-indexed)
@@ -460,12 +461,13 @@ export default function EventLandingPage() {
         {/* Mobile Version */}
         <div className="lg:hidden relative" style={{ backgroundColor: '#131313' }}>
           {/* Background Image */}
-          <div 
+          <LazyBackgroundImage
+            imageUrl="/lpsicad/imagens/Fundo-Thaty-Mobile.webp"
             className="w-full bg-cover bg-center bg-no-repeat relative"
             style={{
-              backgroundImage: 'url(/lpsicad/imagens/Fundo-Thaty-Mobile.webp)',
               minHeight: '500px'
             }}
+            priority={true}
           >
             {/* Countdown - acima da imagem do Eduardo */}
             <div className="flex justify-center pt-[15px] pb-4 z-10 relative">
@@ -592,7 +594,7 @@ export default function EventLandingPage() {
                 COM IMÓVEIS USANDO O CAPITAL DE TERCEIROS
               </h1>
             </div>
-          </div>
+          </LazyBackgroundImage>
           
           {/* Content Container */}
           <div className="px-4 py-4 space-y-6" style={{ backgroundColor: '#131313' }}>
@@ -646,11 +648,10 @@ export default function EventLandingPage() {
 
         {/* Desktop Version */}
         <div className="hidden lg:block relative min-h-[90vh]">
-          <div 
+          <LazyBackgroundImage
+            imageUrl="/lpsicad/imagens/Fundo-Thaty-Desktop.webp"
             className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-            style={{
-              backgroundImage: 'url(/lpsicad/imagens/Fundo-Thaty-Desktop.webp)'
-            }}
+            priority={true}
           />
 
           <div className="relative z-10 h-[90vh] flex items-center w-full" style={{
@@ -1012,11 +1013,9 @@ export default function EventLandingPage() {
       {/* Seção Para quem é */}
       <section className="py-16 lg:py-0 relative" style={{ backgroundColor: '#131313' }}>
         {/* Background Image - Desktop Only */}
-        <div 
+        <LazyBackgroundImage
+          imageUrl="/lpsicad/imagens/Fundo-pra-quem-e.webp"
           className="hidden lg:block absolute inset-0 bg-contain bg-center bg-no-repeat opacity-30"
-          style={{
-            backgroundImage: 'url(/lpsicad/imagens/Fundo-pra-quem-e.webp)'
-          }}
         />
         <div className="container mx-auto px-4 lg:px-8 relative z-10 lg:min-h-[800px] lg:flex lg:items-center lg:justify-center">
           <div className="w-full">

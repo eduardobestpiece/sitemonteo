@@ -26,10 +26,17 @@ export default defineConfig({
           'supabase': ['@supabase/supabase-js'],
           'icons': ['lucide-react'],
         },
+        // Otimização de nomes de chunks para melhor cache
+        chunkFileNames: 'assets/js/[name]-[hash].js',
+        entryFileNames: 'assets/js/[name]-[hash].js',
+        assetFileNames: 'assets/[ext]/[name]-[hash].[ext]',
       },
     },
     // Aumentar limite de aviso de chunk size
     chunkSizeWarningLimit: 1000,
+    // Otimizações adicionais
+    target: 'es2015',
+    cssMinify: true,
   },
   // Otimizações de preview
   preview: {
